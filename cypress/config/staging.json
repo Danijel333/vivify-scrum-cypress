@@ -1,0 +1,7 @@
+{
+    "baseUrl": "https://vivifyscrum-stage.com/",
+    "baseAPI" : "https://api.vivifyscrum-stage.com/api/v2/",
+    "env": {
+        "name" : "staging"
+    }
+  }

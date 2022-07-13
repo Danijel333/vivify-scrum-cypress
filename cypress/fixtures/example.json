@@ -1,0 +1,13 @@
+{
+  "loginCredentials" : {
+
+    "user1" : {
+      "email" : "dan.janjic@gmail.com",
+      "password"  : "ovojesifra33"
+    },
+    "user2" : {
+      "email" : "komatinaivana@yahoo.com",
+      "password" : "12345"
+    }
+  }
+}
