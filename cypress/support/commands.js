@@ -23,3 +23,12 @@
 //
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
+
+Cypress.Commands.add('generateFixture', () => {
+    const { faker } = require('@faker-js/faker')
+
+    cy.writeFile('cypress/fixtures/faker.json', {
+        'Title': faker.name.jobTitle(),
+        'Image' : "https://www.nasemesto.rs/wp-content/uploads/2018/08/pas-ker.jpg"
+    })
+})
