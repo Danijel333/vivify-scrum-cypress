@@ -31,4 +31,4 @@ class Organization {
     }
 }
 
-export const organization = new Organization
+export const organization = new Organization()

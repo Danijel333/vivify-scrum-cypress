@@ -5,4 +5,4 @@ class Navigation{
     }
 }
 
-export const navigation = new Navigation
+export const navigation = new Navigation()
