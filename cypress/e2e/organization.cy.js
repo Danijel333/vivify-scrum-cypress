@@ -11,7 +11,6 @@ describe('Organization', () => {
         cy.url().should('include', '/my-organizations')
     })
 
-
     it('Create organiztion without title', () => {
         cy.fixture('faker').then(organizationData => {
             organization.addNewBtn.click()
@@ -30,7 +29,26 @@ describe('Organization', () => {
             organization.Organization(organizationData.Title)
             navigation.nextBtn.click()
             navigation.nextBtn.click()
+            navigation.boardOkBtn.click()
             organization.organization.should('be.visible')
+        })
+    })
+
+    it('Delete organization', () => {
+        cy.fixture('faker').then(organizationData => {
+            organization.addNewBtn.click()
+            organization.addOrganizationBtn.click()
+            organization.Organization(organizationData.Title)
+            navigation.nextBtn.click()
+            navigation.nextBtn.click()
+            organization.organization.click()
+            navigation.boardOkBtn.click()
+            navigation.configurationBtn.click()
+            navigation.deleteBtn.click()
+            organization.confirmingPass(users.loginCredentials.user2.password)
+            organization.confirmYourActionTitle.should('have.text', 'Confirm Your Action')
+            navigation.yesBtn.click()
+            organization.organizationName.should('not.exist')
         })
     })
 })
