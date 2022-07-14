@@ -33,8 +33,8 @@ class Board {
     }
 
     // method for adding new board with assertions
-
     addNewBoardWithAssert(title){
+
         cy.intercept({
             method : 'POST',
             url : "boards"
@@ -57,9 +57,8 @@ class Board {
             expect(interception.response.statusMessage).eql('Created');
         })
     };
-
+    
     // method for adding new board without assertions
-
     addNewBoard(title){
         this.addNewButton.click();
         this.addBoardButton.click();
@@ -73,7 +72,7 @@ class Board {
         this.goNextButton.click();
         this.finishButton.click();
     };
-
+    
     addBoardWithoutTitle(){
         this.addNewButton.click();
         this.addBoardButton.click();
