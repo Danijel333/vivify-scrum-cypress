@@ -1,4 +1,4 @@
-/// <reference types= "cypress"/>
+<reference types= "cypress"/>
 
 import {loginPage} from "../page_object/loginPage.js";
 import user from "../fixtures/users.json"

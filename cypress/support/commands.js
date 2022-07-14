@@ -34,3 +34,12 @@ Cypress.Commands.add('validatePageUrl', (matchingString) => {
 Cypress.Commands.add('validatePageHeader', (matchingString) => {
     cy.get('h1').should('have.text', matchingString);
 })
+
+Cypress.Commands.add('generateFixture', () => {
+    const { faker } = require('@faker-js/faker')
+
+    cy.writeFile('cypress/fixtures/faker.json', {
+        'Title': faker.name.firstName(),
+        'Image' : "https://www.nasemesto.rs/wp-content/uploads/2018/08/pas-ker.jpg"
+    })
+})
