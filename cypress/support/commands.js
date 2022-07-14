@@ -40,6 +40,7 @@ Cypress.Commands.add('generateFixture', () => {
 
     cy.writeFile('cypress/fixtures/faker.json', {
         'Title': faker.name.firstName(),
-        'Image' : "https://www.nasemesto.rs/wp-content/uploads/2018/08/pas-ker.jpg"
+        'Email' : faker.internet.email(),
+        'Address' : faker.address.streetAddress
     })
 })
