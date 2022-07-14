@@ -7,7 +7,7 @@ import user from "../fixtures/users.json"
 describe('user login', () => {
 
     it('visit login page', () => {
-        cy.visit("")
+        cy.visit('');
     })
 
     it('validate login page', () => {
@@ -17,8 +17,8 @@ describe('user login', () => {
 
     it('user login with valid credentials', () => {
         loginPage.loginUserWithUI(
-            user.loginCredentials.user1.email,
-            user.loginCredentials.user1.password
+            user.loginCredentials.user2.email,
+            user.loginCredentials.user2.password
         );
     })
 

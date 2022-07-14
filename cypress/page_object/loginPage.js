@@ -22,9 +22,19 @@ class Login {
     }
 
     loginUserWithUI(email, password){
+        cy.intercept({
+            method : 'POST',
+            url : ''
+    }).as('sucessfullLogin');
+
         this.loginEmailInput.type(email);
         this.loginPasswordInput.type(password);
         this.loginButton.click();
+
+        cy.wait('@sucessfullLogin').then(interception => {
+            expect(interception.response.statusCode).eql(200);
+            expect(interception.response.statusMessage).eql('OK');
+            expect(interception.response.body.user.id).eql(2330);        })
     }
 }
 
