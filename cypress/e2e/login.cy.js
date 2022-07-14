@@ -7,7 +7,7 @@ import user from "../fixtures/users.json"
 describe('user login', () => {
 
     it('visit login page', () => {
-        cy.visit("")
+        cy.visit('');
     })
 
     it('validate login page', () => {
