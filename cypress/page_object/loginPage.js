@@ -34,7 +34,8 @@ class Login {
         cy.wait('@sucessfullLogin').then(interception => {
             expect(interception.response.statusCode).eql(200);
             expect(interception.response.statusMessage).eql('OK');
-            expect(interception.response.body.user.id).eql(2330);        })
+            // expect(interception.response.body.user.id).eql(2330);        
+        })
     }
 }
 
