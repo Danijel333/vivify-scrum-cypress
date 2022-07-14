@@ -20,7 +20,7 @@ describe('create new board', () => {
     })
 
     it('create new board with valid data',()=> {
-        createBoard.addNewBoard(
+        createBoard.addNewBoardWithAssert(
             boardName
         );
     })
