@@ -41,6 +41,6 @@ Cypress.Commands.add('generateFixture', () => {
     cy.writeFile('cypress/fixtures/faker.json', {
         'Title': faker.name.firstName(),
         'Email' : faker.internet.email(),
-        'Address' : faker.address.streetAddress
+        'Address' : faker.address.streetAddress()
     })
 })
