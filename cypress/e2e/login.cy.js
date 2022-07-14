@@ -1,4 +1,4 @@
-/// <reference types= "cypress"/>
+<reference types= "cypress"/>
 
 import {loginPage} from "../page_object/loginPage.js";
 import user from "../fixtures/users.json"
@@ -17,8 +17,8 @@ describe('user login', () => {
 
     it('user login with valid credentials', () => {
         loginPage.loginUserWithUI(
-            user.loginCredentials.user1.email,
-            user.loginCredentials.user1.password
+            user.loginCredentials.user2.email,
+            user.loginCredentials.user2.password
         );
     })
 
