@@ -23,3 +23,14 @@
 //
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
+
+// -- function that walidates page url--
+Cypress.Commands.add('validatePageUrl', (matchingString) => {
+    cy.url().should('include', matchingString);
+});
+
+//-- function that validates page header--
+
+Cypress.Commands.add('validatePageHeader', (matchingString) => {
+    cy.get('h1').should('have.text', matchingString);
+})

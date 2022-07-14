@@ -20,6 +20,12 @@ class Login {
         return cy.get('form[class="el-form"]')
             .find('button');
     }
+
+    loginUserWithUI(email, password){
+        this.loginEmailInput.type(email);
+        this.loginPasswordInput.type(password);
+        this.loginButton.click();
+    }
 }
 
 export const loginPage = new Login();
