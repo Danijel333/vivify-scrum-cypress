@@ -20,6 +20,22 @@ class Login {
         return cy.get('form[class="el-form"]')
             .find('button');
     }
+
+    loginUserWithUI(email, password){
+        cy.intercept({
+            method : 'POST',
+            url : ''
+    }).as('sucessfullLogin');
+
+        this.loginEmailInput.type(email);
+        this.loginPasswordInput.type(password);
+        this.loginButton.click();
+
+        cy.wait('@sucessfullLogin').then(interception => {
+            expect(interception.response.statusCode).eql(200);
+            expect(interception.response.statusMessage).eql('OK');
+            expect(interception.response.body.user.id).eql(2330);        })
+    }
 }
 
 export const loginPage = new Login();
