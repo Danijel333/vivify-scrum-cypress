@@ -21,11 +21,11 @@ class Login {
             .find('button');
     }
 
-    loginUserWithUI(email, password){
+    loginUserWithUI(email, password) {
         cy.intercept({
-            method : 'POST',
-            url : ''
-    }).as('sucessfullLogin');
+            method: 'POST',
+            url: ''
+        }).as('sucessfullLogin');
 
         this.loginEmailInput.type(email);
         this.loginPasswordInput.type(password);
@@ -34,8 +34,15 @@ class Login {
         cy.wait('@sucessfullLogin').then(interception => {
             expect(interception.response.statusCode).eql(200);
             expect(interception.response.statusMessage).eql('OK');
-            // expect(interception.response.body.user.id).eql(2330);        
         })
+    }
+
+    loginWithoutAssertions(email, password) {
+
+        this.loginEmailInput.type(email);
+        this.loginPasswordInput.type(password);
+        this.loginButton.click();
+
     }
 }
 

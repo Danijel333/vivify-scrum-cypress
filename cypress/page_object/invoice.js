@@ -1,97 +1,92 @@
-class Invoice{
+class Invoice {
 
-    get selectOrganization(){
+    get selectOrganization() {
         return cy.get('div[class="vs-c-my-organization organization-list-item"]').first();
     }
 
-    get modalOkButton(){
+    get modalOkButton() {
         return cy.contains('OK');
     }
 
-    get invoiceTabButton(){
+    get invoiceTabButton() {
         return cy.get('li[data-cy="organization-invoicing"]');
     }
 
-    get createFirstInvoiceButton(){
+    get createFirstInvoiceButton() {
         return cy.get('button').contains('CREATE YOUR FIRST INVOICE');
     }
 
-    get createNewInvoiceButton(){
+    get createNewInvoiceButton() {
         return cy.get('button').contains('Create new Invoice');
     }
 
-    get selectClientDropDown(){
+    get selectClientDropDown() {
         return cy.get('span').contains('Select Client');
     }
 
-    get selectClientFromMenu(){
+    get selectClientFromMenu() {
         return cy.get('div[class="el-autocomplete-suggestion__list"]').first();
     }
 
-    get inputInvoiceNumber(){
+    get inputInvoiceNumber() {
         return cy.get('input[placeholder="Enter number..."]').first();
     }
 
-    get inputDueDate(){
+    get inputDueDate() {
         return cy.get('input[placeholder="Enter due date..."]').last();
     }
 
-    get selectInvoiceDueDate(){
+    get selectInvoiceDueDate() {
         return cy.get('span[class="flatpickr-day "]').last();
     }
-    
-    get inputInvoicePoNumber(){
+
+    get inputInvoicePoNumber() {
         return cy.get('input[placeholder="Enter number..."]').last();
     }
 
-    get inputInvoiceSubject(){
+    get inputInvoiceSubject() {
         return cy.get('input[placeholder="Enter subject..."]');
     }
 
-    get inputOrganizationName(){
+    get inputOrganizationName() {
         return cy.get('input[placeholder="Enter organization..."]');
     }
 
-    get textAreaOrganizationAddress(){
+    get textAreaOrganizationAddress() {
         return cy.get('textarea[placeholder="Enter location..."]');
     }
 
-    get inputEmail(){
+    get inputEmail() {
         return cy.get('input[placeholder="Enter email..."]').first();
     }
 
-    get textareaAdditionalInfo(){
-        return  cy.get('textarea[placeholder="Enter info..."]');
+    get textareaAdditionalInfo() {
+        return cy.get('textarea[placeholder="Enter info..."]');
     }
 
-    get sendInvoiceButton(){
+    get sendInvoiceButton() {
         return cy.get('button').contains('Send Invoice');
     }
 
-    get confirmSendInvoiceButton(){
+    get confirmSendInvoiceButton() {
         return cy.get('button').last();
     }
 
-    createInvoiceWithAssertions(
-        invoiceId, 
-        poNumber, 
-        subject, 
-        orgName, 
+    createInvoice(
+        invoiceId,
+        poNumber,
+        subject,
+        orgName,
         address,
         email,
         info
-        ){
-            cy.intercept({
-                method : "POST",
-                url : "https://cypress-api.vivifyscrum-stage.com/api/v2/organizations/19293/send-invoice"
-            }).as('invoiceSent');
-
+    ) {
         this.selectOrganization.click();
-        if(this.modalOkButton){
+        if (this.modalOkButton) {
             this.modalOkButton.click();
         }
         this.invoiceTabButton.click();
-        if(this.modalOkButton){
+        if (this.modalOkButton) {
             this.modalOkButton.click();
         }
         // if(this.createFirstInvoiceButton){
@@ -100,7 +95,7 @@ class Invoice{
         //     this.createNewInvoiceButton.click();
         // }
         this.createNewInvoiceButton.click();
-        this.selectClientDropDown.click(); 
+        this.selectClientDropDown.click();
         this.selectClientFromMenu.click();
         this.inputInvoiceNumber.type(invoiceId);
         this.inputDueDate.click();
@@ -113,10 +108,6 @@ class Invoice{
         this.textareaAdditionalInfo.type(info);
         this.sendInvoiceButton.click();
         this.confirmSendInvoiceButton.click();
-
-        cy.wait('@invoiceSent').then(intersection => {
-            console.log(intersection.response);
-        })
     }
 
 }
