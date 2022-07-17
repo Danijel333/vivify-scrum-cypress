@@ -32,7 +32,9 @@ class Board {
         return cy.get('button[class="el-button vs-c-button-focus el-button--success el-button--large"]').last();
     }
 
-    addNewBoard(title){
+    // method for adding new board with assertions
+    addNewBoardWithAssert(title){
+
         cy.intercept({
             method : 'POST',
             url : "boards"
@@ -55,7 +57,22 @@ class Board {
             expect(interception.response.statusMessage).eql('Created');
         })
     };
-
+    
+    // method for adding new board without assertions
+    addNewBoard(title){
+        this.addNewButton.click();
+        this.addBoardButton.click();
+        this.openOrganizationDropdown.click();
+        this.selectOrganization.click();
+        this.boardTitleInput.type(title);
+        this.goNextButton.click();
+        this.boardTypeRadioButton.click();
+        this.goNextButton.click();
+        this.goNextButton.click();
+        this.goNextButton.click();
+        this.finishButton.click();
+    };
+    
     addBoardWithoutTitle(){
         this.addNewButton.click();
         this.addBoardButton.click();
