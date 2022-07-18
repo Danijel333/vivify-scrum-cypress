@@ -38,7 +38,7 @@ class Login {
     }
 
     loginWithoutAssertions(email, password) {
-
+        cy.visit('login');
         this.loginEmailInput.type(email);
         this.loginPasswordInput.type(password);
         this.loginButton.click();

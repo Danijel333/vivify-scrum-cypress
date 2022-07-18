@@ -1,7 +1,7 @@
 {
     "baseUrl": "https://cypress.vivifyscrum-stage.com/",
-    "baseAPI" : "https://cypress-api.vivifyscrum-stage.com/api/v2/",
     "env": {
-        "name" : "qa"
+        "name" : "qa",
+        "baseAPI" : "https://cypress-api.vivifyscrum-stage.com/api/v2/"
     }
   }

@@ -44,3 +44,29 @@ Cypress.Commands.add('generateFixture', () => {
         'Address' : faker.address.streetAddress()
     })
 })
+
+// -- function for logging in using backend --
+
+Cypress.Commands.add('backendLogging',(email, password) => {
+    // cy.intercept({
+    //     method : 'POST',
+    //     url : '**/login'
+    // }).as('sucessfullLogin');
+
+    cy.request({
+        method : 'POST',
+        url : `${Cypress.env('baseAPI')+'login'}`,
+        body : {
+            email : email,
+            password : password
+        }
+    }).its('body').then(response => {
+        window.localStorage.setItem('user_id', response.user.id);
+        window.localStorage.setItem('user', JSON.stringify(response.user));
+        window.localStorage.setItem('token', response.token);
+    })
+
+    // cy.wait('@sucessfullLogin').then(interception => {
+    //     console.log(interception.response)
+    // })
+})

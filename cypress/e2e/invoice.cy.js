@@ -1,19 +1,11 @@
 /// <reference types =" cypress" >
-import {
-    loginPage
-} from "../page_object/loginPage";
-import {
-    newInvoice
-} from "../page_object/invoice";
+import newInvoice from "../page_object/invoice.js";
 import user from "../fixtures/users.json";
-import {
-    faker
-} from '@faker-js/faker';
-
+import { faker } from '@faker-js/faker';
 
 
 describe("create new invoice", () => {
-
+    let invoiceId = "";
     let randomNumber = "";
     let subject = "";
     let orgName = "";
@@ -21,11 +13,11 @@ describe("create new invoice", () => {
     let email = "";
 
     before('login', () => {
-        cy.visit('');
-        loginPage.loginWithoutAssertions(
+
+        cy.backendLogging(
             user.loginCredentials.user2.email,
             user.loginCredentials.user2.password
-        );
+        )
 
         randomNumber = faker.random.numeric();
         subject = faker.name.jobDescriptor();
@@ -35,12 +27,11 @@ describe("create new invoice", () => {
     })
 
     it('create invoice with valida data', () => {
-
+        cy.visit('')
         cy.intercept({
             method: "POST",
             url: "**/send-invoice"
         }).as('invoiceSent');
-        console.log(randomNumber);
 
         newInvoice.createInvoice(
             randomNumber,
@@ -56,6 +47,16 @@ describe("create new invoice", () => {
             expect(interception.response.statusCode).eql(200);
             expect(interception.response.statusMessage).eql('OK');
             expect(interception.response.body.client_id).eql(935);
+            invoiceId = parseInt(interception.response.body.id);
         })
+    })
+
+    it('delete invoice after create', () => {
+        newInvoice.deleteInvoiceAfterCreate(invoiceId);
+    })
+
+    xit('delete invoice after login', () => {
+        cy.visit('')
+        newInvoice.deleteInvoiceFullSteps();
     })
 })
