@@ -1,54 +1,58 @@
-import { navigation } from "../page_object/navigation.js"
-import { loginPage } from "../page_object/loginPage.js"
-import { organization } from "../page_object/organization.js"
+import  navigation  from "../page_object/navigation.js"
+import  loginPage  from "../page_object/loginPage.js"
+import  organization  from "../page_object/organization.js"
 import users from "../fixtures/users.json"
 
 describe('Organization', () => {
-    beforeEach(() => {
+    let organizationId = "";
+
+    before(() => {
         cy.generateFixture()
         cy.visit('')
         loginPage.loginUserWithUI(users.loginCredentials.user2.email,users.loginCredentials.user2.password)
-        cy.url().should('include', '/my-organizations')
+        cy.validatePageUrl('/my-organizations')
     })
 
     it('Create organiztion without title', () => {
-        cy.fixture('faker').then(organizationData => {
-            organization.addNewBtn.click()
-            organization.addOrganizationBtn.click()
-            organization.Organization("")
+            organization.createOrganization('')
             navigation.nextBtn.should('be.disabled')
+            navigation.exitBoardModal.click()
         })
-    })
 
     it('Create Organization', () => {
         cy.fixture('faker').then(organizationData => {
-            organization.addNewBtn.click()
-            organization.addNewBtn.should('be.visible')
-            organization.addOrganizationBtn.click()
-            organization.organizationTitle.should('have.text', 'New Organization')
-            organization.Organization(organizationData.Title)
-            navigation.nextBtn.click()
-            navigation.nextBtn.click()
-            navigation.okBtn.click()
-            organization.organization.should('be.visible')
+            cy.intercept({
+                method : 'POST',
+                url : '**/organizations'
+            }).as('organizationCreated');
+
+            organization.createOrganization(organizationData.Title)
+            navigation.navigationOrganization()
+
+            cy.wait('@organizationCreated').then(interception => {
+                organizationId = interception.response.body.id;
+                expect(interception.response.body.id).eq(organizationId)
+                expect(interception.response.body.name).eq(organizationData.Title)
+                expect(interception.response.statusCode).eql(201);
+                expect(interception.response.statusMessage).eql("Created");
+            })
         })
     })
 
     it('Delete organization', () => {
         cy.fixture('faker').then(organizationData => {
-            organization.addNewBtn.click()
-            organization.addOrganizationBtn.click()
-            organization.Organization(organizationData.Title)
-            navigation.nextBtn.click()
-            navigation.nextBtn.click()
-            organization.organization.click()
-            navigation.okBtnkBtn.click()
-            navigation.configurationBtn.click()
-            navigation.deleteBtn.click()
-            organization.confirmingPass(users.loginCredentials.user2.password)
-            organization.confirmYourActionTitle.should('have.text', 'Confirm Your Action')
-            navigation.yesBtn.click()
-            organization.organizationName.should('not.exist')
+            cy.intercept({
+                method : 'POST',
+                url : '**/organizations/*'
+            }).as('organizationDeleted');
+
+            organization.deleteOrganization(users.loginCredentials.user2.password)
+
+            cy.wait('@organizationDeleted').then(interception => {
+                expect(parseInt(interception.response.url.slice(-5))).eq(organizationId)
+                expect(interception.response.statusCode).eql(201);
+                expect(interception.response.statusMessage).eql("Created");
+            })
         })
     })
 })
