@@ -49,10 +49,6 @@ Cypress.Commands.add('generateFixture', () => {
 // -- function for logging in using backend --
 
 Cypress.Commands.add('backendLogging',(email, password) => {
-    // cy.intercept({
-    //     method : 'POST',
-    //     url : '**/login'
-    // }).as('sucessfullLogin');
 
     cy.request({
         method : 'POST',
@@ -67,7 +63,4 @@ Cypress.Commands.add('backendLogging',(email, password) => {
         window.localStorage.setItem('token', response.token);
     })
 
-    // cy.wait('@sucessfullLogin').then(interception => {
-    //     console.log(interception.response)
-    // })
 })

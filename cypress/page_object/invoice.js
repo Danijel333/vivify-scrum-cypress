@@ -98,11 +98,6 @@ module.exports = {
         if(this.modalOkButton){
             this.modalOkButton.click();
         }
-        // if(this.createFirstInvoiceButton){
-        //     this.createFirstInvoiceButton.click();
-        // }else{
-        //     this.createNewInvoiceButton.click();
-        // }
         this.createNewInvoiceButton.click();
         this.selectClientDropDown.click(); 
         this.selectClientFromMenu.click();
