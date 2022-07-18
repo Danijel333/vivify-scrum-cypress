@@ -2,6 +2,10 @@
     "baseUrl": "https://cypress.vivifyscrum-stage.com/",
     "env": {
         "name" : "qa",
+<<<<<<< HEAD
+        "baseAPI" : "https://cypress-api.vivifyscrum-stage.com/api/v2/"
+=======
         "apiUrl" : "https://cypress-api.vivifyscrum-stage.com/api/v2/"
+>>>>>>> main
     }
   }
