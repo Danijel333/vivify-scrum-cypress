@@ -4,5 +4,5 @@
         "name" : "qa",
         "baseAPI" : "https://cypress-api.vivifyscrum-stage.com/api/v2/"
     },
-    "experimentalSessionAndOrigin": true
+    "experimentalSessionAndOrigin" : true
   }

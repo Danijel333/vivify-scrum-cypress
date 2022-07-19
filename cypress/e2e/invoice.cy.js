@@ -6,15 +6,22 @@ import { faker } from '@faker-js/faker';
 
 describe("create new invoice", () => {
     let invoiceId = "";
+    let organizationId = "";
     let randomNumber = "";
     let subject = "";
     let orgName = "";
     let address = "";
     let email = "";
 
-    before('login', () => {
+    const login = (email, password) =>{
+        cy.session('user1', () => {
+            cy.backendLogging(email,password)
+        })
+    }
 
-        cy.backendLogging(
+    beforeEach('login', () => {
+
+        login(
             user.loginCredentials.user2.email,
             user.loginCredentials.user2.password
         )
@@ -48,14 +55,26 @@ describe("create new invoice", () => {
             expect(interception.response.statusMessage).eql('OK');
             expect(interception.response.body.client_id).eql(805);
             invoiceId = parseInt(interception.response.body.id);
-        })
+            organizationId = parseInt(interception.response.body.organization_id);        })
     })
 
     it('delete invoice after create', () => {
+        cy.visit(`organizations/${organizationId}/invoice`)
+        cy.intercept({
+            method : 'GET',
+            url : '**/organizations/**'
+        }).as('deleteInvoiceIntercept')
+
+        
         newInvoice.deleteInvoiceAfterCreate(invoiceId);
+
+        cy.wait('@deleteInvoiceIntercept').then(interception => {
+            console.log(interception.response)
+        })
+
     })
 
-    xit('delete invoice after login', () => {
+    it('delete invoice after login', () => {
         cy.visit('')
         newInvoice.deleteInvoiceFullSteps();
     })
