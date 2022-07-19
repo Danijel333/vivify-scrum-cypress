@@ -3,6 +3,6 @@
     "env": {
         "name" : "staging",
         "baseAPI" : "https://api.vivifyscrum-stage.com/api/v2/"
-    }
-
+    },
+    "experimentalSessionAndOrigin": true
   }

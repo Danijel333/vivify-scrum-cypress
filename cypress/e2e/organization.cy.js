@@ -6,14 +6,17 @@ import users from "../fixtures/users.json"
 describe('Organization', () => {
     let organizationId = "";
 
-    before(() => {
+    beforeEach(() => {
         cy.generateFixture()
-        cy.visit('')
-        loginPage.loginUserWithUI(users.loginCredentials.user2.email,users.loginCredentials.user2.password)
-        cy.validatePageUrl('/my-organizations')
+        cy.session('Login', () => {
+            cy.visit('')
+            loginPage.loginWithoutAssertions(users.loginCredentials.user2.email,users.loginCredentials.user2.password)
+            cy.validatePageUrl('/my-organizations')
+        })
     })
 
     it('Create organiztion without title', () => {
+        cy.visit('my-organizations')
             organization.createOrganization('')
             navigation.nextBtn.should('be.disabled')
             navigation.exitBoardModal.click()
@@ -21,6 +24,7 @@ describe('Organization', () => {
 
     it('Create Organization', () => {
         cy.fixture('faker').then(organizationData => {
+            cy.visit('my-organizations')
             cy.intercept({
                 method : 'POST',
                 url : '**/organizations'
@@ -41,11 +45,13 @@ describe('Organization', () => {
 
     it('Delete organization', () => {
         cy.fixture('faker').then(organizationData => {
+            cy.visit(`organizations/${organizationId}/boards`)
             cy.intercept({
                 method : 'POST',
                 url : '**/organizations/*'
             }).as('organizationDeleted');
 
+            navigation.okBtn.click()
             organization.deleteOrganization(users.loginCredentials.user2.password)
 
             cy.wait('@organizationDeleted').then(interception => {

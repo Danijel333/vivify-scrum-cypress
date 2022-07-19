@@ -45,5 +45,3 @@ module.exports = {
 
     }
 }
-
-export const loginPage = new Login();
