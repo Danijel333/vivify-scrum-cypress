@@ -24,18 +24,19 @@ module.exports = {
     createOrganization(title) {
 
         this.addNewBtn.click()
+        this.addNewBtn.should('be.visible')
         this.addOrganizationBtn.click()
-
+        this.organizationTitle.should('have.text', 'New Organization')
         if(title) {
         this.organizationName.type(title)
         }
-
-        navigation.nextBtn.click()
-        navigation.nextBtn.click()
-        navigation.okBtn.click()
     },
 
-    confirmingPass(password) {
+    deleteOrganization(password) {
+        navigation.configurationBtn.click()
+        navigation.deleteBtn.click()
+        navigation.confirmYourActionTitle.should('have.text', 'Confirm Your Action')
         this.confirmingPassword.type(password)
+        navigation.yesBtn.click()
     }
 }

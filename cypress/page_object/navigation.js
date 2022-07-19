@@ -36,6 +36,16 @@ module.exports = {
         return cy.get('button[name="close-confirmation-modal-btn"]')
     },
 
+    get exitBoardModal() {
+        return cy.get('button[name="close-new-board-modal-btn"]')
+    },
+
+    navigationOrganization() {
+        this.nextBtn.click()
+        this.nextBtn.click()
+        this.okBtn.click()
+    },
+
     navigationClient() {
         this.clientBtn.click()
         this.okBtn.click()
