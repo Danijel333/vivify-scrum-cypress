@@ -4,7 +4,8 @@ module.exports = {
         email = "komatinaivana@yahoo.com",
         password = "12345",
         statusCode = 200,
-        statusText = "OK"
+        statusText = "OK",
+        assert = true
     })  {
         cy.request({
             failOnStatusCode : false,
@@ -16,8 +17,10 @@ module.exports = {
             }
         }).then(response => {
             window.localStorage.setItem('token',response.body.token);
-            expect(response.status).eql(statusCode);
-            expect(response.statusText).eql(statusText);
+            if(assert){
+                expect(response.status).eql(statusCode);
+                expect(response.statusText).eql(statusText);
+            }        
         })
     }
 
