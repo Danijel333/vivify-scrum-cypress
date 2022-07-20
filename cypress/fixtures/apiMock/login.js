@@ -1,11 +1,13 @@
 module.exports = {
 
     post({
-        email = "dan.janjic@gmail.com",
-        password = "ovojesifra33",
+        email = "komatinaivana@yahoo.com",
+        password = "12345",
         statusCode = 200,
-    }) {
+        statusText = "OK"
+    })  {
         cy.request({
+            failOnStatusCode : false,
             method : 'POST',
             url : `${Cypress.env('baseAPI')+'login'}`,
             body : {
@@ -13,9 +15,8 @@ module.exports = {
                 password : password
             }
         }).then(response => {
-
-            return response.statusCode
-            
+            expect(response.status).eql(statusCode);
+            expect(response.statusText).eql(statusText);
         })
     }
 
