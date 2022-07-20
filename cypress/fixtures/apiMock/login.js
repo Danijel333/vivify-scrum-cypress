@@ -15,6 +15,7 @@ module.exports = {
                 password : password
             }
         }).then(response => {
+            window.localStorage.setItem('token',response.body.token);
             expect(response.status).eql(statusCode);
             expect(response.statusText).eql(statusText);
         })

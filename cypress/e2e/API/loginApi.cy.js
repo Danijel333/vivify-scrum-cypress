@@ -23,8 +23,19 @@ describe("Login API tests", () => {
 
     })
 
-    it("Test 6 - Invalid password", () => {
+    it("Test 6 - Invalid email format - missing username", () => {
+        login.post({email : "@yahoo.com", statusCode : 401, statusText : "Unauthorized"})
+
+    })
+
+    it("Test 7 - Invalid email format - missing .com", () => {
+        login.post({email : "komatinaivana@yahoo", statusCode : 401, statusText : "Unauthorized"})
+
+    })
+
+    it("Test 8 - Invalid password", () => {
         login.post({password : "somepass", statusCode : 401, statusText : "Unauthorized"})
 
     })
+
 })
