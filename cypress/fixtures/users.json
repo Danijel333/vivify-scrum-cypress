@@ -3,11 +3,13 @@
 
     "user1" : {
       "email" : "dan.janjic@gmail.com",
-      "password"  : "ovojesifra33"
+      "password"  : "ovojesifra33",
+      "token" : ""
     },
     "user2" : {
       "email" : "komatinaivana@yahoo.com",
-      "password" : "12345"
+      "password" : "12345",
+      "token" : ""
     }
   }
 }
