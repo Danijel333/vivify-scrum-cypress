@@ -7,7 +7,7 @@ describe('Organization', () => {
     let clientID = ""
 
     beforeEach(() => {
-        login.post({assert : false})
+        login.post({assert: false})
     })
 
     it('Create organization', () => {
@@ -17,19 +17,34 @@ describe('Organization', () => {
     })
 
     it('Add client without name', () => {
-        clients.post({name: '',statusCode: 422, statusText: "Unprocessable Entity", organizationID: organizationID}).then(response => {
+        clients.post({
+            name: '',
+            statusCode: 422,
+            statusText: "Unprocessable Entity",
+            organizationID: organizationID
+        }).then(response => {
             expect(response.body.name[0]).eq("The name field is required.")
         })
     })
 
     it('Add new client without email', () => {
-        clients.post({email: "",statusCode: 422, statusText: "Unprocessable Entity", organizationID: organizationID}).then(response => {
+        clients.post({
+            email: "",
+            statusCode: 422,
+            statusText: "Unprocessable Entity",
+            organizationID: organizationID
+        }).then(response => {
             expect(response.body.email[0]).eq("The email field is required.")
         })
     })
 
     it('Add new client with invalid email format', () => {
-        clients.post({email: 'testtest',statusCode: 422, statusText: "Unprocessable Entity", organizationID: organizationID}).then(response => {
+        clients.post({
+            email: 'testtest',
+            statusCode: 422,
+            statusText: "Unprocessable Entity",
+            organizationID: organizationID
+        }).then(response => {
             expect(response.body.email[0]).eq("The email format is invalid.")
         })
     })
@@ -50,19 +65,37 @@ describe('Organization', () => {
     })
 
     it('Edit clients info without name', () => {
-        clients.put({name: '', statusCode: 422, statusText: "Unprocessable Entity", organizationID: organizationID, clientID: clientID}).then(response => {
+        clients.put({
+            name: '',
+            statusCode: 422,
+            statusText: "Unprocessable Entity",
+            organizationID: organizationID,
+            clientID: clientID
+        }).then(response => {
             expect(response.body.name[0]).eq("The name field is required.")
         })
     })
 
     it('Edit clients info without email', () => {
-        clients.put({email: '', statusCode: 422, statusText: "Unprocessable Entity", organizationID: organizationID, clientID: clientID}).then(response => {
+        clients.put({
+            email: '',
+            statusCode: 422,
+            statusText: "Unprocessable Entity",
+            organizationID: organizationID,
+            clientID: clientID
+        }).then(response => {
             expect(response.body.email[0]).eq("The email field is required.")
         })
     })
 
     it('Edit clients with invalid email format', () => {
-        clients.put({email: 'testeste', statusCode: 422, statusText: "Unprocessable Entity", organizationID: organizationID, clientID: clientID}).then(response => {
+        clients.put({
+            email: 'testeste',
+            statusCode: 422,
+            statusText: "Unprocessable Entity",
+            organizationID: organizationID,
+            clientID: clientID
+        }).then(response => {
             expect(response.body.email[0]).eq("The email format is invalid.")
         })
     })
@@ -76,8 +109,7 @@ describe('Organization', () => {
     })
 
     it('Delete client', () => {
-        clients.delete({organizationID: organizationID, clientID: clientID}).then(response =>{
-        })
+        clients.delete({organizationID: organizationID, clientID: clientID})
     })
 
     it('Delete a client that has already been deleted', () => {
