@@ -2,7 +2,7 @@ module.exports = {
 
     post({
         name = "Some name",
-        type = "kanban_board", 
+        type = "kanban_board",
         organization_id = 20300,
         statusCode = 201,
         statusText = "Created",

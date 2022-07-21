@@ -20,8 +20,7 @@ module.exports = {
             if(assert){
                 expect(response.status).eql(statusCode);
                 expect(response.statusText).eql(statusText);
-            }        
+            }
         })
     }
-
 }
