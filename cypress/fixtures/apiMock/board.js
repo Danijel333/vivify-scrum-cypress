@@ -42,6 +42,28 @@ module.exports = {
 
             }
         })
+    },
+
+    get({
+        boardId = 10251,
+        statusCode = 200,
+        statusText = "OK",
+        token = window.localStorage.getItem('token')
+    }){
+        cy.request({
+            failOnStatusCode : false,
+            method : 'GET',
+            url : `${Cypress.env('baseAPI')+'boards/' + boardId}`,
+            headers: {
+                'Authorization' : 'Bearer ' + token,
+                'Accept' : 'application/json',
+                'Content-Type' : 'application/json'
+            }
+        }).then(response => {
+            expect(response.status).eql(statusCode);
+            expect(response.statusText).eql(statusText);
+            statusCode === 200 ? cy.log("Board data : " + JSON.stringify(response.body)) : "";
+        })
     }
 
 }
