@@ -8,7 +8,7 @@ module.exports = {
         statusText = "Created",
         token = window.localStorage.getItem('token')
     }) {
-        cy.request({
+        return cy.request({
             failOnStatusCode : false,
             method : 'POST',
             url : `${Cypress.env('baseAPI')+'boards'}`,
@@ -21,27 +21,11 @@ module.exports = {
                 name : name,
                 type : type,
                 organization_id : organization_id,
-
             }
         }).then(response => {
             expect(response.status).eql(statusCode);
             expect(response.statusText).eql(statusText);
-            if(statusCode === 201){
-                expect(response.body.organization_id).eql(organization_id);
-            }else if(token === ""){
-                expect(response.body.message).eql("Token not provided")
-            }else if(name === "" || type === ""){
-                if(name === ""){
-                    expect(response.body.name[0]).eql("The name field is required.")
-                }else if(type === ""){
-                    expect(response.body.type[0]).eql("The type field is required.")
-                }
-            }else if(!(type === "scrum_board" && type === "kanban_board")){
-                expect(response.body.type[0]).eql("The selected type is invalid.")
-            }else{
-
-            }
-        })
+        });
     },
 
     get({
@@ -63,7 +47,7 @@ module.exports = {
             expect(response.status).eql(statusCode);
             expect(response.statusText).eql(statusText);
             statusCode === 200 ? cy.log("Board data : " + JSON.stringify(response.body)) : "";
-        })
+        });
     },
 
     put({
@@ -93,7 +77,28 @@ module.exports = {
         }).then(response => {
             expect(response.status).eql(statusCode);
             expect(response.statusText).eql(statusText);
-        })
+        });
+    },
+
+    delete({
+        boardId,
+        statusCode = 200,
+        statusText = "OK",
+        token = window.localStorage.getItem('token')
+    }){
+        return cy.request({
+            failOnStatusCode : false,
+            method : 'DELETE',
+            url : `${Cypress.env('baseAPI')+'boards/' + boardId}`,
+            headers: {
+                'Authorization' : 'Bearer ' + token,
+                'Accept' : 'application/json',
+                'Content-Type' : 'application/json'
+            }
+        }).then(response => {
+            expect(response.status).eql(statusCode);
+            expect(response.statusText).eql(statusText);
+        });
     }
 
 }
