@@ -25,6 +25,7 @@ module.exports = {
         }).then(response => {
             expect(response.status).eql(statusCode);
             expect(response.statusText).eql(statusText);
+            console.log(response)
         });
     },
 
@@ -34,7 +35,7 @@ module.exports = {
         statusText = "OK",
         token = window.localStorage.getItem('token')
     }){
-        cy.request({
+        return cy.request({
             failOnStatusCode : false,
             method : 'GET',
             url : `${Cypress.env('baseAPI')+'boards/' + boardId}`,
