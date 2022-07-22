@@ -4,7 +4,7 @@ import board from "../../fixtures/apiMock/board"
 import task from "../../fixtures/apiMock/task"
 
 describe('Tasks', () => {
-    let organizationID = ""
+    let organization_id = ""
     let boardID = ""
     let taskID = ""
 
@@ -17,12 +17,12 @@ describe('Tasks', () => {
             statusCode: 201,
             statusText: "Created"
         }).then(response => {
-            organizationID = response.body.id
+            organization_id = response.body.id
         })
     })
 
     it('Create board', () => {
-        board.post({organizationID: organizationID, type: "scrum_board"}).then(response => {
+        board.post({organization_id: organization_id, type: "scrum_board"}).then(response => {
             boardID = response.body.id
         })
     })
@@ -186,5 +186,9 @@ describe('Tasks', () => {
 
     it('Delete a task that has already been deleted', () => {
         task.delete({taskID: taskID, boardID: boardID, statusCode: 404, statusText: "Not Found"})
+    })
+
+    it('Delete organization', () => {
+        organization.delete({statusCode: 201, statusText: "Created", organizationID: organization_id})
     })
 })
